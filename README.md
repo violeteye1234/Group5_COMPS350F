@@ -1,13 +1,21 @@
 # Group5_COMPS350F
 
 ## Project Information
-Project name, Group info (group no., students’ names and SID)
+Project Name: Rescue Tails
+Group info:
+  Group No. 5
+  1) SHAH, Pooja Zenit - 13125135
+  2) Li Xilin - 12815806
+  3) Ahmad Muhammad Taha - 13667329
+  4) Awais Sarfraz - 13675772
+  5) Ke Yankai - 12979014
 
 ## Project File Introduction
 - server.js: a brief summary of functionalities it provided, …
 - package.json: lists of dependencies, …
 - public (folder, if you have): what static files included, …
-- views (folder, if you have): what EJS or UI files included, …
+- views (folder, if you have): what EJS or UI files included, … :login.ejs
+
 - models (folder, if you have): what model files included, …
   
 ## Cloud URL
