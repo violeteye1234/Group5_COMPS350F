@@ -1,1 +1,14 @@
-package.json code here
+{
+  "name": "server",
+  "description": "Brave Rescue App",
+  "author": "Group5 TeamLeader: <s1312513@live.hkmu.edu.hk>",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "*",
+    "ejs": "*"
+  },
+  "engine": "node >= 0.10.0",
+  "scripts": {
+    "start": "node server"
+  }
+}
