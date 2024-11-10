@@ -19,10 +19,11 @@ Group info:
 - models (folder, if you have): what model files included, …
   
 ## Cloud URL
-- your server host running on the cloud platform for testing:
+- The cloud-based server URL (your server host running on the cloud platform) for testing:
 - E.g., https://381project-group1.render.com/
   
 ## Operation Guides
 - the use of Login/Logout pages: a list of valid login information, sign in steps? …
 - the use of your CRUD web pages: which button or UI is used to implement create, read, update, and delete?
-- the use your RESTful CRUD se
+- the use your RESTful CRUD services: the lists of APIs? HTTP request types? Path URI? How to test them?
+- CURL testing commands?
