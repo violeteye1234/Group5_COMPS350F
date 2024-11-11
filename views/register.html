@@ -14,37 +14,39 @@
             .container {
                 display: flex;
                 align-items: center;
-                margin: 20px;
+                margin: 1rem;
             }
 
             #title {
                 color: rgb(84,132,229);
                 text-shadow: 3px 5px 3px rgb(76,34,184);
-                font-size: 28px;
+                font-size: 2em;
                 margin: 0;
                 text-decoration: underline;
             }
 
             img {
-                width: 100px;
+                width: 10%;
                 height: auto;
-                margin-right: 20px; 
+                margin-right: 1rem; 
             }
 
             .facebookContainer {
-                margin-left: 5rem; 
-                background-color: white; 
-                width: 78rem; 
-                height: 7rem;
+                margin-left: 2%;
+                background-color: white;
+                width: 90%;
+                height: auto;
                 border-radius: 30px;
                 display: flex;
                 align-items: center;
                 padding: 1rem;
+                box-sizing: border-box;
             }
 
             .facebookContainer img {
-                margin-left: 13rem; 
-                margin-top: 0; 
+                width: 10%;
+                height: auto;
+                margin-left: 5%;
                 margin-right: 1rem; 
             }
 
@@ -54,31 +56,52 @@
                 border-radius: 10px;
                 border: 1px solid var(--icon-color, #FFF);
                 margin-top: 2rem;
-                margin-left: 5rem; 
-                font-size: 30px;
+                margin-left: 2%;
+                font-size: 1.5em;
                 color: white;
-                width:80rem;
-                height: auto;
+                width: 90%;
                 box-sizing: border-box;
+            }
+
+            .loginContainer input {
+                width: 100%;
+                padding: 0.5rem;
+                box-sizing: border-box;
+            }
+
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .facebookContainer {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .facebookContainer img, .facebookContainer a {
+                    margin-left: 0;
+                    margin-top: 0.5rem;
+                }
             }
         </style>
     </head>
     <body>
         <div class="container">
-            <img src="logo.png">
+            <img src="images/logo.png">
             <h1 id="title">BRAVE RESCUES</h1> 
-            <h2 style="color: white; font: Josefin Sans;margin-left:12px;">For User</h2>
+            <h2 style="color: white; font: Josefin Sans;margin-left:1rem;">For User</h2>
         </div>
         <div class="facebookContainer">
-            <img src="facebookLogo.png">
-            <a href="" style="color: grey; font-family: 'Times New Roman', Times, serif; text-decoration: none; font-size: 40px; display: inline; margin-left: 9rem;">Login with Facebook</a>
+            <img src="images/facebookLogo.png">
+            <a href="" style="color: grey; font-family: 'Times New Roman', Times, serif; text-decoration: none; font-size: 2.5em; display: inline; margin-left: 18rem;">Login with Facebook</a>
         </div>
         <div class="loginContainer">
             <form name="loginDetails">
-                Username: <input type="text" name="username" style="width: 50rem;"> <br>
-                Password: <input type="text" name="username" style="width: 50rem;"> <br>
-                Confirm Password: <input type="text" name="username" style="width: 50rem;">
-
+                Username: <input type="text" name="username"> <br>
+                Password: <input type="text" name="password"> <br>
+                Confirm Password: <input type="text" name="confirm_password">
             </form>
         </div>
     </body>
