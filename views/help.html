@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <style>
@@ -20,7 +21,7 @@
                 flex-direction: column; 
             }
 
-            .sideButton{
+            .sideButton {
                 background-color: black;
                 color: white;
                 border: none;
@@ -30,13 +31,32 @@
                 width: 100%;
                 height: 90px;
             }
+
+            .animalButton{
+                width: 7em;
+                height:3em;
+                flex-shrink: 0;
+                border:none;
+                color: black;
+                background-color: #D9D9D9;
+                border-radius: 14px;
+                font-size: 1.5em;
+                font-family: 'Joan';
+                margin-left: 7.2em;
+            }
+
+            .horizontal {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
         </style>
     </head>
     <body>
         <div class="side-by-side">
             <div class="flex-grid">
                 <div>
-                    <button class="sideButton">View</button>
+                    <button class="sideButton" >View</button>
                 </div>
                 <div>
                     <button class="sideButton">Report</button>
@@ -45,18 +65,19 @@
                     <button class="sideButton">History</button>
                 </div>
                 <div>
-                    <button class="sideButton"style="background-color: #4386EC;">Help</button>
+                    <button class="sideButton" style="background-color: #4386EC;">Help</button>
                 </div>
                 <div>
                     <button class="sideButton">Information</button>
                 </div>
                 <div>
-                    <img src="images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 20em;" onclick="someFunction();">
+                    <img src="images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 12em;" onclick="someFunction();">
                 </div>
             </div>
         </div>
-        <div style="margin-left: 20px;">
-            <h2 style="color: pink;">testing 12343</h2>
-        </div>  
+        <div style="margin-top: 15em; margin-left: 10em; font-family: 'Josefin';">
+            <h2>For any issues, please send an email to: </h2>
+            <h2>s1312513@live.hkmu.edu.hk</h2>
+        </div>
     </body>
 </html>
