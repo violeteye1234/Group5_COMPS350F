@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <style>
@@ -20,7 +21,7 @@
                 flex-direction: column; 
             }
 
-            .sideButton{
+            .sideButton {
                 background-color: black;
                 color: white;
                 border: none;
@@ -30,16 +31,30 @@
                 width: 100%;
                 height: 90px;
             }
+
+            .animalButton{
+                width: 7em;
+                height:3em;
+                flex-shrink: 0;
+                border:none;
+                color: black;
+                background-color: #D9D9D9;
+                border-radius: 14px;
+                font-size: 1.5em;
+                font-family: 'Joan';
+                margin-left: 7.2em;
+            }
+
         </style>
     </head>
     <body>
         <div class="side-by-side">
             <div class="flex-grid">
                 <div>
-                    <button class="sideButton">View</button>
+                    <button class="sideButton" >View</button>
                 </div>
                 <div>
-                    <button class="sideButton"style="background-color: #4386EC;">Report</button>
+                    <button class="sideButton" style="background-color: #4386EC;">Report</button>
                 </div>
                 <div>
                     <button class="sideButton">History</button>
@@ -51,12 +66,23 @@
                     <button class="sideButton">Information</button>
                 </div>
                 <div>
-                    <img src="images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 20em;" onclick="someFunction();">
+                    <img src="images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 12em;" onclick="someFunction();">
                 </div>
             </div>
         </div>
-        <div style="margin-left: 20px;">
-            <h2 style="color: pink;">testing 12343</h2>
-        </div>  
+        <div>
+            <h1 style="margin-left: 12em;margin-top: 4.5em;">What animal do you see?  👀 </h1><br><br><br><br><br><br>
+            <div>
+                <button class="animalButton"><b>Street Cat</b></button>
+                <button class="animalButton"><b>Street Dog</b></button>
+                <button class="animalButton"><b>Street Animal</b></button>
+            </div>
+            <div>
+                <img src="images/cat.png"style="margin-left: 4em;margin-top: 2em;width: 20em;">
+                <img src="images/dog.png"style="margin-left: 4em;width: 20em;">
+                <img src="images/monkey.png"style="margin-left: 6em;margin-top: 2em;width: 10em;">
+            </div>
+        </div>
+
     </body>
 </html>
