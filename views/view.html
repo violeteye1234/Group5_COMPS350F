@@ -20,7 +20,7 @@
                 flex-direction: column; 
             }
 
-            .sideButton{
+            .sideButton {
                 background-color: black;
                 color: white;
                 border: none;
@@ -29,6 +29,23 @@
                 font-size: 20px;
                 width: 100%;
                 height: 90px;
+            }
+
+            .search-container {
+                display: flex;
+                align-items: center;
+                margin-left: 7em;
+                margin-top: 3em;
+            }
+
+            label {
+                margin-right: 1em;
+                font-size: 30px;
+            }
+
+            select {
+                font-size: 18px;
+                padding: 0.5em;
             }
         </style>
     </head>
@@ -51,12 +68,24 @@
                     <button class="sideButton">Information</button>
                 </div>
                 <div>
-                    <img src="images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 20em;" onclick="someFunction();">
+                    <img src="images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 12em;" onclick="someFunction();">
                 </div>
             </div>
         </div>
-        <div style="margin-left: 20px;">
-            <h2 style="color: pink;">testing 12343</h2>
+        <div class="search-container">
+            <label>Search District</label>
+            <select name="District">
+                <option value="'default">Choose an option</option>
+                <option value="Sham Shui Po">Kowloon</option>
+                <option value="Yau Tsim Mong">Yau Tsim Mong</option>
+            </select>
+            <label style="margin-left: 3em;">Animal Type</label>
+            <select name="District">
+                <option value="'default">Choose an option</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="others">Others</option>
+            </select>
         </div>  
     </body>
 </html>
