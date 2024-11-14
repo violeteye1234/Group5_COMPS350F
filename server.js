@@ -4,6 +4,7 @@ var express             = require('express'),
     FacebookStrategy    = require('passport-facebook').Strategy,
     session             = require('express-session');
 
+/* FACEBOOK OAUTH BEGIN */
 var user = {}
 passport.serializeUser(function(user,done) {done(null,user);});
 passport.deserializeUser(function(id, done) {done(null, user);});
@@ -30,6 +31,10 @@ function (token, refreshToken, profile, done){
 	return done(null, user);
 	})
 );
+
+/* FACEBOOK OAUTH END */
+
+/* RENDERING BEGIN */
 
 app.set('view engine', 'ejs');
 
