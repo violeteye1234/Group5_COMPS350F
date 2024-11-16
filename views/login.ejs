@@ -61,12 +61,12 @@
         </style>
     </head>
     <body>
-        <img src="/views/images/logo.png" style="width: 200px;height: auto; display: block; margin-top: -15rem;">
+        <img src="/Group5_COMPS381F/views/images/logo.png" style="width: 200px;height: auto; display: block; margin-top: -15rem;">
         <h1 id="title">BRAVE RESCUES</h1>
         <div id="log">
-            <form name="loginDetails">
-                <input class="input" placeholder="username"><br>
-                <input class="input" placeholder="password"><br><br><br>
+            <form name="loginDetails" method="POST" action="/login">
+                <input class="input" placeholder="username" type="text" id="name" name="name" required><br>
+                <input type="password" id="password" name="password" required class="input" placeholder="password"><br><br><br>
                 <div class="button">
                     <button id="button">Submit</button>
                 </div>
