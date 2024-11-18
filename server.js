@@ -44,7 +44,7 @@ passport.use(new FacebookStrategy({
 );
 
 app.set('view engine', 'ejs');
-app.set('views', './views'); // Ensure views directory is correctly set
+app.set('views', './views'); 
 
 app.use((req, res, next) => {
     let d = new Date();
@@ -91,6 +91,26 @@ app.get('/', isLoggedIn, (req, res) => {
 
 app.get("/content", isLoggedIn, (req, res) => {
     res.render('loggedIn', { user: req.user }); // Use 'loggedIn.ejs' for logged-in view
+});
+
+app.get("/view", isLoggedIn, (req, res) => {
+	res.render('view', {user: req.user});
+});
+
+app.get("/report", isLoggedIn, (req, res) => {
+	res.render('report', {user:req.user});
+});
+
+app.get("/history", isLoggedIn, (req, res) => {
+	res.render('history', {user: req.user});
+});
+
+app.get("/help", isLoggedIn, (req, res) => {
+	res.render('help', {user: req.user});
+});
+
+app.get("/information", isLoggedIn, (req, res) => {
+	res.render('information', {user: req.user});
 });
 
 app.get('/*', (req, res) => {
