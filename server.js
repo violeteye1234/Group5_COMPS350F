@@ -5,6 +5,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
+//login
 const users_login = {
     'test1': 'abc',
     'test2': 'def'
@@ -44,6 +45,23 @@ passport.use(new FacebookStrategy({
     })
 );
 
+//mongodb connection
+var { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+//const mongourl = 'mongodb+srv://kyk123456:031216Kyk@cluster0.pter2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+//const dbName = 'Animals';
+//const collectionName = 'animal';
+const mongourl = 'mongodb+srv://user1:vvf7QQtiXtl1WRmr@pjcluster0.6ewhc.mongodb.net/?retryWrites=true&w=majority&appName=PJCluster0';
+const dbName = 'Animals';
+const collectionName = 'dogs';
+
+const client = new MongoClient(mongourl,{
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
+
 app.set('view engine', 'ejs');
 app.set('views', './views'); 
 
@@ -58,6 +76,37 @@ app.use((req, res, next) => {
 const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) return next();
     res.redirect('/login');
+};
+
+//find all animals
+const findAllAnimals = async (db, criteria = {}) => {	
+	let findResults = [];
+	let collection = db.collection(collectionName);
+	console.log(`findCriteria: ${JSON.stringify(criteria)}`);
+	findResults = await collection.find(criteria).toArray();
+	
+	console.log(`findDocument: ${findResults.length}`);
+	console.log(`findResults: ${JSON.stringify(findResults)}`);	
+	return findResults;
+};
+
+const handle_FindAll = async (res) => {
+    await client.connect();
+    console.log("Connected successfully to server");
+    const db = client.db(dbName);
+    
+    const dogsCollection = db.collection('dogs');
+    const catsCollection = db.collection('cats');
+    
+    const dogs = await dogsCollection.find({}).toArray(); // Fetch all dogs
+    const cats = await catsCollection.find({}).toArray(); // Fetch all cats
+    
+    // Combine the results
+    const allAnimals = [...dogs, ...cats];
+    
+    await client.close();
+    console.log("Closed DB connection");
+    res.status(200).render('history', { nAnimals: allAnimals.length, animals: allAnimals }); // Pass both nAnimals and animals
 };
 
 // Serve the login form
@@ -104,10 +153,12 @@ app.get("/report", isLoggedIn, (req, res) => {
 	res.render('report', {user:req.user});
 });
 
-app.get("/history", isLoggedIn, (req, res) => {
-	res.render('history', {user: req.user});
+//app.get("/history", isLoggedIn, (req, res) => {
+//	res.render('history', {user: req.user});
+//});
+app.get('/history', isLoggedIn, (req, res) => {
+    handle_FindAll(res); // Calls handle_Find to show all animals
 });
-
 app.get("/help", isLoggedIn, (req, res) => {
 	res.render('help', {user: req.user});
 });
