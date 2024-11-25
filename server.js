@@ -80,9 +80,9 @@ const isLoggedIn = (req, res, next) => {
 const findAllAnimals = async (db, criteria = {}) => {	
 	let findResults = [];
 	let collection = db.collection(collectionName);
-	console.log(`findCriteria: ${JSON.stringify(criteria)}`);
 	findResults = await collection.find(criteria).toArray();
-	
+
+    console.log(`findCriteria: ${JSON.stringify(criteria)}`);
 	console.log(`findDocument: ${findResults.length}`);
 	console.log(`findResults: ${JSON.stringify(findResults)}`);	
 	return findResults;
@@ -93,40 +93,19 @@ const handle_FindAll = async (res) => {
     console.log("Connected successfully to server");
     const db = client.db(dbName);
     
-    const dogsCollection = db.collection('animal');
+    //const dogsCollection = db.collection('animal'); ca ged this
     
-    const animal = await dogsCollection.find({}).toArray(); // Fetch all dogs
-    
+    //const animal = await dogsCollection.find({}).toArray(); // Fetch all dogs changed this
+    const animal = await findAllAnimals(db);
+
     // Combine the results
     const allAnimals = [...animal];
-
+    
+    await client.close();
+    console.log("Closed DB connection");
     res.status(200).render('history', { nAnimals: allAnimals.length, animals: allAnimals }); // Pass both nAnimals and animals
 };
 
-const findOneAnimalDocument = async (db, criteria) => {
-    const collection = db.collection(collectionName);
-    return await collection.find(criteria).toArray();
-};
-//DELETE
-const deleteDocument = async (db,criteria) => {
-    var collection = db.collection(collectionName);
-    let results = await collection.deleteMany( criteria );
-    return results;
-}
-
-const handle_Delete = async(req,res) => {
-    await client.connect();
-    const db = client.db(dbName);
-    let DOCID = {_id: ObjectId.createFromHexString(req.body._id)}; 
-    const docs = await findOneAnimalDocument(db,DOCID);
-    if (docs.length > 0 && docs[0].userid === req.user.id) {
-        await deleteDocument(db,DOCID);
-        res.redirect('/history');
-    }else{
-    	console.log('didnt work');
-        res.redirect('/history');
-    }
-}
 // Serve the login form
 app.get("/login", (req, res) => {
     res.render('login', { message: null }); // Use 'login.ejs' for the form
@@ -154,11 +133,6 @@ app.get("/auth/facebook/callback",
         failureRedirect: "/login"
     })
 );
-
-app.post('/delete', isLoggedIn, async (req, res) => {
-    console.log("Delete request received"); 
-    await handle_Delete(req, res);
-});
 
 app.get('/', isLoggedIn, (req, res) => {
     res.redirect('/content');
