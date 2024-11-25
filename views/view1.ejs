@@ -32,26 +32,39 @@
                 height: 90px;
             }
 
-            .search-container {
-                display: flex;
-                align-items: center;
-                margin-left: 7em;
+            .animal-details {
+                margin-left: 2em;
                 margin-top: 4em;
-            }
-
-            label {
-                margin-right: 1em;
-                font-size: 2em;
-            }
-
-            select {
-                font-size: 18px;
-                padding: 0.5em;
-            }
-
-            .radioButton{
-                color:gray;
                 font-size: 1.5em;
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+            }
+
+            .animal-card {
+                border: 2px solid #4386EC;
+                border-radius: 8px;
+                padding: 1em;
+                box-shadow: 0 0 10px black;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            .update-button {
+                background-color: #4386EC;
+                color: white;
+                border: none;
+                padding: 0.5em 1em;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+                font-size: 1em;
+            }
+
+            .update-button:hover {
+                background-color: #346AB0;
             }
         </style>
     </head>
@@ -59,46 +72,59 @@
         <div class="side-by-side">
             <div class="flex-grid">
                 <div>
-                <a href = "/view">
-                    <button class="sideButton" style="background-color: #4386EC;">View</button></a>
+                    <a href="/view">
+                        <button class="sideButton" style="background-color: #4386EC;">View</button>
+                    </a>
                 </div>
                 <div>
-                <a href = "/report">
-                    <button class="sideButton">Report</button> </a>
-                </div> 
-                <div>
-                <a href = "/history">
-                    <button class="sideButton">History</button></a>
+                    <a href="/report">
+                        <button class="sideButton">Report</button>
+                    </a>
                 </div>
                 <div>
-                <a href= "/help">
-                    <button class="sideButton">Help</button> </a>
+                    <a href="/history">
+                        <button class="sideButton">History</button>
+                    </a>
                 </div>
                 <div>
-                <a href = "/information">
-                    <button class="sideButton">Information</button> </a>
+                    <a href="/help">
+                        <button class="sideButton">Help</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/information">
+                        <button class="sideButton">Information</button>
+                    </a>
                 </div>
                 <div>
                     <img src="/images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 12em;" onclick="someFunction();">
                 </div>
             </div>
-            <div>
-
-            </div>
         </div>
-        <form>
-            <h1 style="margin-left: 1.5em;">Animal View</h1>
-            <div class="animals-list">
-                <h2>Total Animals: <%= nAnimals %></h2>
-                <% for (var animal of animals) { %>
-                <div class="animal-item">
-                    <h3>Breed: <%= animal.breed %></h3>
-                   <p>ID: <%= animal._id %></p>
-                    <form action="/delete" method="POST" style="display:inline;">
-                        <input type="hidden" name="_id" value="<%= animal._id %>">
-                        <button type="submit">Delete</button>
-                </form>
-            </div>
-        </form>
+
+        <div class="animal-details">
+            <h1>Animal Details</h1>
+            <% for (var animal of variable1) { %>
+                <div class="animal-card">
+                    <h2>Animal Name: <%= animal.Animal_name %></h2>
+                    <p><strong>ID:</strong> <%= animal._id %></p>
+                    <p><strong>Type:</strong> <%= animal.Type %></p>
+                    <p><strong>Breed:</strong> <%= animal.Breed %></p>
+                    <p><strong>Gender:</strong> <%= animal.Gender %></p>
+                    <p><strong>Location:</strong> <%= animal.Location %></p>
+                    <p><strong>Prominent Features:</strong> <%= animal.Prominent_Features %></p>
+                    <p><strong>Disabilities:</strong> <%= animal.Disabilities %></p>
+                    <p><strong>Adopted:</strong> <%= animal.Adopted %></p>
+                    <p><strong>Time:</strong> <%= animal.Time %></p>
+                    <p><strong>Upload Image:</strong> <img src="<%= animal.Upload_Image %>" alt="Animal Image" style="width: 100px;"></p>
+
+                    <form action="/update/<%= animal._id %>" method="GET">
+                        <button type="submit" class="update-button">Update</button>
+                    </form>
+
+                    <hr>
+                </div>
+            <% } %>
+        </div>
     </body>
 </html>
