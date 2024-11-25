@@ -5,6 +5,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
+
 //login
 const users_login = {
     'test1': 'abc',
@@ -16,6 +17,9 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+const animalSchema = require('./models/item');
+const animals = mongoose.model('animal', animalSchema);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -108,6 +112,19 @@ const findOneAnimalDocument = async (db, criteria) => {
     return await collection.find(criteria).toArray();
 };
 
+const handle_FindOne = async (res) => {
+    await client.connect();
+    console.log("Connected successfully to server");
+    const db = client.db(dbName);
+    let DOCID = {_id: ObjectId.createFromHexString(req.body._id)};
+    const animal = await findOneAnimalDocument(db, DOCID);
+    if (animal.length > 0 && animal[0].userid = )
+    //const animalOne = [...animal];
+    await client.close();
+    console.log("Closed DB connection")
+    res.status(200).render('view1', {animal: animalOne})
+}
+
 //DELETE
 const deleteDocument = async (db,criteria) => {
     var collection = db.collection(collectionName);
@@ -173,6 +190,12 @@ app.get("/content", isLoggedIn, (req, res) => {
 app.get("/view", isLoggedIn, (req, res) => {
 	res.render('view', {user: req.user});
 });
+
+//view_find POST
+app.post('/view', isLoggedIn, async (req, res) => {
+    console.log("view find req")
+    await handle_FindOne(req, res);
+})
 
 app.get("/report", isLoggedIn, (req, res) => {
 	res.render('report', {user:req.user});
