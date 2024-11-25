@@ -47,12 +47,10 @@ passport.use(new FacebookStrategy({
 
 //mongodb connection
 var { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-//const mongourl = 'mongodb+srv://kyk123456:031216Kyk@cluster0.pter2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-//const dbName = 'Animals';
-//const collectionName = 'animal';
-const mongourl = 'mongodb+srv://user1:vvf7QQtiXtl1WRmr@pjcluster0.6ewhc.mongodb.net/?retryWrites=true&w=majority&appName=PJCluster0';
+const mongourl = 'mongodb+srv://kyk123456:031216Kyk@cluster0.pter2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const dbName = 'Animals';
-const collectionName = 'dogs';
+const collectionName = 'animal';
+
 
 const client = new MongoClient(mongourl,{
     serverApi: {
@@ -95,14 +93,12 @@ const handle_FindAll = async (res) => {
     console.log("Connected successfully to server");
     const db = client.db(dbName);
     
-    const dogsCollection = db.collection('dogs');
-    const catsCollection = db.collection('cats');
+    const dogsCollection = db.collection('animal');
     
-    const dogs = await dogsCollection.find({}).toArray(); // Fetch all dogs
-    const cats = await catsCollection.find({}).toArray(); // Fetch all cats
+    const animal = await dogsCollection.find({}).toArray(); // Fetch all dogs
     
     // Combine the results
-    const allAnimals = [...dogs, ...cats];
+    const allAnimals = [...animal];
     
     await client.close();
     console.log("Closed DB connection");
