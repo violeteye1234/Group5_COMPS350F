@@ -82,9 +82,23 @@
                     <img src="/images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 12em;" onclick="someFunction();">
                 </div>
             </div>
+            <div>
+
+            </div>
         </div>
         <form>
-            
+            <h1 style="margin-left: 1.5em;">Animal View</h1>
+            <div class="animals-list">
+                <h2>Total Animals: <%= nAnimals %></h2>
+                <% for (var animal of animals) { %>
+                <div class="animal-item">
+                    <h3>Breed: <%= animal.breed %></h3>
+                   <p>ID: <%= animal._id %></p>
+                    <form action="/delete" method="POST" style="display:inline;">
+                        <input type="hidden" name="_id" value="<%= animal._id %>">
+                        <button type="submit">Delete</button>
+                </form>
+            </div>
         </form>
     </body>
 </html>

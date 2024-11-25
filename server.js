@@ -4,6 +4,7 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 
 //login
@@ -18,7 +19,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-const animalSchema = require('./models/item');
+const animalSchema = require('./models/animal');
 const animals = mongoose.model('animal', animalSchema);
 
 app.use(passport.initialize());
@@ -106,23 +107,49 @@ const handle_FindAll = async (res) => {
     res.status(200).render('history', { nAnimals: allAnimals.length, animals: allAnimals }); // Pass both nAnimals and animals
 };
 
-//PENN's birthday gift
 const findOneAnimalDocument = async (db, criteria) => {
-    const collection = db.collection(collectionName);
+    const collection = db.collection(collectionName).sort({relevanceField: -1});//根据相关性对结果降序排列
     return await collection.find(criteria).toArray();
 };
 
-const handle_FindOne = async (res) => {
+const handle_FindOne = async (req, res) => {
     await client.connect();
     console.log("Connected successfully to server");
     const db = client.db(dbName);
+    const criteria = {
+        a: req.body.Location,
+        b: req.body.Type,
+        c: req.body.Breed,
+        d: req.body.Gender,
+        e: req.body.Prominent_Features,
+        f: req.body.Disabilities,
+        g: req.body.Adopted,
+    };
+    // remove empty key or undefined key
+    Object.keys(criteria).forEach(key => {
+        if (!criteria[key]) {
+            delete criteria[key];
+        }
+    });
+    
+    const animals = await findOneAnimalDocument(db,criteria);
+    console.log("get result", animals);
+    if (animals.length > 0) {
+        res.status(200).render('view1', { variable1: animals })
+    } else {
+        console.log('Cant find')
+        res.redirect('/history')
+    }
+    /*
     let DOCID = {_id: ObjectId.createFromHexString(req.body._id)};
     const animal = await findOneAnimalDocument(db, DOCID);
-    if (animal.length > 0 && animal[0].userid = )
+    if (animal.length > 0 && animal[0].userid === req.user.id){
+        res.status(200).render('view1', {animal: animalOne})
+    }
     //const animalOne = [...animal];
     await client.close();
-    console.log("Closed DB connection")
-    res.status(200).render('view1', {animal: animalOne})
+    console.log("Closed DB connection")*/
+    
 }
 
 //DELETE
