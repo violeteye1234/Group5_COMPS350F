@@ -61,14 +61,18 @@
     <div>
         <h1 style="margin-left: 1.5em;">Animal History</h1>
         <div class="animals-list">
-            <h2>Total Animals: <%= nAnimals %></h2>
-            <% for (var animal of animals) { %>
-                <div class="animal-item">
-                    <h3>Breed: <%= animal.breed %></h3>
-                    <p>ID: <%= animal._id %></p>
-                </div>
-            <% } %>
-        </div>
+    		<h2>Total Animals: <%= nAnimals %></h2>
+    		<% for (var animal of animals) { %>
+        	<div class="animal-item">
+            	<h3>Breed: <%= animal.breed %></h3>
+           	<p>ID: <%= animal._id %></p>
+            	<form action="/delete" method="POST" style="display:inline;">
+                	<input type="hidden" name="_id" value="<%= animal._id %>">
+                	<button type="submit">Delete</button>
+		    </form>
+		</div>
+	    <% } %>
+	</div>
     </div>
 </body>
 </html>

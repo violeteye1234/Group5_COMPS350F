@@ -47,12 +47,10 @@ passport.use(new FacebookStrategy({
 
 //mongodb connection
 var { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-//const mongourl = 'mongodb+srv://kyk123456:031216Kyk@cluster0.pter2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-//const dbName = 'Animals';
-//const collectionName = 'animal';
-const mongourl = 'mongodb+srv://user1:vvf7QQtiXtl1WRmr@pjcluster0.6ewhc.mongodb.net/?retryWrites=true&w=majority&appName=PJCluster0';
+const mongourl = 'mongodb+srv://kyk123456:031216Kyk@cluster0.pter2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const dbName = 'Animals';
-const collectionName = 'dogs';
+const collectionName = 'animal';
+
 
 const client = new MongoClient(mongourl,{
     serverApi: {
@@ -95,20 +93,40 @@ const handle_FindAll = async (res) => {
     console.log("Connected successfully to server");
     const db = client.db(dbName);
     
-    const dogsCollection = db.collection('dogs');
-    const catsCollection = db.collection('cats');
+    const dogsCollection = db.collection('animal');
     
-    const dogs = await dogsCollection.find({}).toArray(); // Fetch all dogs
-    const cats = await catsCollection.find({}).toArray(); // Fetch all cats
+    const animal = await dogsCollection.find({}).toArray(); // Fetch all dogs
     
     // Combine the results
-    const allAnimals = [...dogs, ...cats];
-    
-    await client.close();
-    console.log("Closed DB connection");
+    const allAnimals = [...animal];
+
     res.status(200).render('history', { nAnimals: allAnimals.length, animals: allAnimals }); // Pass both nAnimals and animals
 };
 
+const findOneAnimalDocument = async (db, criteria) => {
+    const collection = db.collection(collectionName);
+    return await collection.find(criteria).toArray();
+};
+//DELETE
+const deleteDocument = async (db,criteria) => {
+    var collection = db.collection(collectionName);
+    let results = await collection.deleteMany( criteria );
+    return results;
+}
+
+const handle_Delete = async(req,res) => {
+    await client.connect();
+    const db = client.db(dbName);
+    let DOCID = {_id: ObjectId.createFromHexString(req.body._id)}; 
+    const docs = await findOneAnimalDocument(db,DOCID);
+    if (docs.length > 0 && docs[0].userid === req.user.id) {
+        await deleteDocument(db,DOCID);
+        res.redirect('/history');
+    }else{
+    	console.log('didnt work');
+        res.redirect('/history');
+    }
+}
 // Serve the login form
 app.get("/login", (req, res) => {
     res.render('login', { message: null }); // Use 'login.ejs' for the form
@@ -136,6 +154,11 @@ app.get("/auth/facebook/callback",
         failureRedirect: "/login"
     })
 );
+
+app.post('/delete', isLoggedIn, async (req, res) => {
+    console.log("Delete request received"); 
+    await handle_Delete(req, res);
+});
 
 app.get('/', isLoggedIn, (req, res) => {
     res.redirect('/content');
