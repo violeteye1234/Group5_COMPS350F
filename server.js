@@ -185,8 +185,7 @@ const updateDocument = async (db, criteria, updateData) => {
 	return results;
 }
 
-
-///errrrrrrrrrooooooooooorrrrrrrrr 
+//view update save
 const handle_UpdateSaveView = async (req, res) => {
 	await client.connect();
 	console.log("Connected successfully to server");
@@ -195,7 +194,8 @@ const handle_UpdateSaveView = async (req, res) => {
 	let DOCID = {_id: new ObjectId(req.params.id)};
 	const docs = await findOneAnimalDocument(db, DOCID);
 	console.log("Documents found:", docs);
-	if (docs.length > 0 && docs[0]._id === req._id) {
+	//if (docs.length > 0 && docs[0][_id]._id === req._id) {
+    if (docs.length > 0 && docs[0]._id.toString() === req.params.id) {
 		const updateData = {
 			Animal_name: req.body.Animal_name,
 			Type: req.body.Type,
@@ -237,9 +237,56 @@ const handle_Delete = async(req,res) => {
         res.redirect('/history');
     }
 }
+
+//insert
+const insertDocument = async (db,doc) => {
+    var collection = db.collection(collectionName);
+    let results = await collection.insertOne(doc);
+    console.log("insert one document:" +JSON.stringify(results));
+    return results;
+}
+
+const handle_Create = async (req, res) => {
+    await client.connect();
+    console.log("Connected successfully to server");
+    const db = client.db(dbName);
+    next_page_type =req.body.type;
+    console.log(next_page_type);
+    res.redirect('/report_enter');
+}
+
+const handle_Create1 = async (req, res) => {
+    await client.connect();
+    console.log("Connected successfully to server");
+    const db = client.db(dbName);
+    const new_empty = '';
+    console.log(req.body.name);
+    console.log(req.body.breed);
+    console.log(req.body.disability);
+    console.log(req.body.gender);
+    console.log(req.body.location);
+    console.log(req.body.prominent_feature);
+    console.log(req.body.image);
+    const new_animal = new animals({
+	    Report : new_empty,
+	    Type : next_page_type,
+	    Animal_name : req.body.name,
+	    Time : new_empty,
+	    Adopted : new_empty,
+	    Breed : req.body.breed,
+	    Disabilities : req.body.disability,
+	    Gender : req.body.gender,
+	    Location : req.body.location,
+	    Prominent_Features : req.body.prominent_feature,
+	    Upload_Image: req.body.image
+    });
+    await insertDocument(db, new_animal);
+    console.log(new_animal);
+}
+
 // Serve the login form
 app.get("/login", (req, res) => {
-    res.render('login', { message: null }); // Use 'login.ejs' for the form
+    res.render('login', { message: null }); // Use 'login.ejs' for the form  kk?
 });
 
 app.post("/login", (req, res, next) => {
@@ -299,11 +346,23 @@ app.get('/update/:id', isLoggedIn, async(req, res) => {
 //view_save update
 app.post('/update/:id', isLoggedIn, async(req, res) => {
 	console.log("update to save");
-	await handle_UpdateSaveView(req, res, req.query);	
+	await handle_UpdateSaveView(req, res);	
 })
 
 app.get("/report", isLoggedIn, (req, res) => {
 	res.render('report', {user:req.user});
+});
+
+app.post("/report", isLoggedIn,(req, res) => {
+	handle_Create(req, res);
+});
+
+app.get("/report_enter", isLoggedIn, (req, res) => {
+	res.render('report_enter', {user:req.user});
+});
+
+app.post("/report_enter", isLoggedIn, (req, res) => {
+	handle_Create1(req, res);
 });
 
 app.get('/history', isLoggedIn, (req, res) => {

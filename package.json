@@ -4,6 +4,7 @@
   "author": "Group5 TeamLeader: <s1312513@live.hkmu.edu.hk>",
   "version": "0.0.1",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "ejs": "*",
     "express": "*",
