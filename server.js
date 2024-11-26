@@ -29,6 +29,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true })); // Middleware to parse form data
 
+//try
+app.use((req, res,next) => {
+	console.log(`Received request for: ${req.originalUrl}`);
+	next();
+})
+
 passport.serializeUser((user, done) => {
     done(null, user);
 });
@@ -193,9 +199,12 @@ const handle_UpdateSaveView = async (req, res) => {
 	//let DOCID = {_id: ObjectId(req.params.id)};
 	let DOCID = {_id: new ObjectId(req.params.id)};
 	const docs = await findOneAnimalDocument(db, DOCID);
+	//const id = docs[0]["_id"];
+	console.log("id",req.params.id);
+	console.log(docs[0]._id.toString());
 	console.log("Documents found:", docs);
-	//if (docs.length > 0 && docs[0][_id]._id === req._id) {
-    if (docs.length > 0 && docs[0]._id.toString() === req.params.id) {
+	//if (docs.length > 0 && docs[0]['_id'] == req._id) {
+	if (docs.length > 0 && docs[0]._id.toString() === req.params.id) {
 		const updateData = {
 			Animal_name: req.body.Animal_name,
 			Type: req.body.Type,
@@ -210,8 +219,6 @@ const handle_UpdateSaveView = async (req, res) => {
 		const results = await updateDocument(db, DOCID, updateData);
 		console.log("Update results:", results);
 		res.status(200).render('info', {message: `Updated ${results.modifiedCount} document(s)`, user: req.user});
-		 //res.render('history');
-		 res.redirect('history');
 	} else {
 		res.status(500).render('info', {message: 'save error !', user: req.user});	
 	}
@@ -345,8 +352,10 @@ app.get('/update/:id', isLoggedIn, async(req, res) => {
 
 //view_save update
 app.post('/update/:id', isLoggedIn, async(req, res) => {
-	console.log("update to save");
-	await handle_UpdateSaveView(req, res);	
+    console.log("Update to save");
+    console.log("Requested ID:", req.params.id); // Log the specific ID being requested
+    console.log("Request parameters:", req.params); // Log all parameters
+    await handle_UpdateSaveView(req, res);	
 })
 
 app.get("/report", isLoggedIn, (req, res) => {
