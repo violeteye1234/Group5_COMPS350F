@@ -4,7 +4,7 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); // Awais & Taha 6:05pm
 
 //const cors = require('cors');
 //app.use(cors());
@@ -27,6 +27,7 @@ const animals = mongoose.model('animal', animalSchema);
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.json()); // added
 app.use(bodyParser.urlencoded({ extended: true })); // Middleware to parse form data
 
 //try
@@ -65,6 +66,18 @@ const mongourl = 'mongodb+srv://kyk123456:031216Kyk@cluster0.pter2.mongodb.net/?
 const dbName = 'Animals';
 const collectionName = 'animal';
 
+//
+mongoose.connect(mongourl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => {
+    console.log("MongoDB connected successfully");
+})
+.catch(err => {
+    console.error("MongoDB connection error:", err);
+});
+//
 
 const client = new MongoClient(mongourl,{
     serverApi: {
@@ -289,6 +302,7 @@ const handle_Create1 = async (req, res) => {
     });
     await insertDocument(db, new_animal);
     console.log(new_animal);
+    res.redirect('/history');
 }
 
 // Serve the login form
@@ -388,6 +402,49 @@ app.get("/information", isLoggedIn, (req, res) => {
 app.get('/*', (req, res) => {
     res.status(404).render('information', { message: `${req.path} - Unknown request! `});
 });
+
+// Taha & Awais 7:03pm
+app.post('/api/animals', async (req, res) => {
+    try {
+        const newAnimal = new animals(req.body);
+        await newAnimal.save();
+        res.status(201).json(newAnimal);
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+});
+
+app.get('/api/animals/:id', async (req, res) => {
+    try {
+        const animal = await animals.findById(req.params.id);
+        if (!animal) return res.status(404).send('Animal not found');
+        res.status(200).json(animal);
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+});
+
+app.put('/api/animals/:id', async (req, res) => {
+    try {
+        const updatedAnimal = await animals.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedAnimal) return res.status(404).send('Animal not found');
+        res.status(200).json(updatedAnimal);
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+});
+
+app.delete('/api/animals/:id', async (req, res) => {
+    try {
+        const deletedAnimal = await animals.findByIdAndRemove(req.params.id);
+        if (!deletedAnimal) return res.status(404).send('Animal not found');
+        res.status(200).send('Animal deleted');
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+});
+
+// Ends here - Awais & Taha
 
 const port = process.env.PORT || 8099;
 app.listen(port, () => { 
