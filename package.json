@@ -12,8 +12,9 @@
     "mongodb": "*",
     "mongoose": "*",
     "passport": "*",
-    "passport-facebook": "*"
-
+    "passport-facebook": "*",
+    "express-formidable":"*",
+    "nodemon": "*"
   },
   "engine": "node >= 0.10.0",
   "scripts": {
