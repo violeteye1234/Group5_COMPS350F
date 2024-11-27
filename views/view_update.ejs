@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color: white;
+                display: flex;
+                flex-direction: row; 
+                justify-content: flex-start;
+                align-items: flex-start;
+                height: 100vh;
+                margin: 0;
+            }
+            .flex-grid {
+                background-color: black;
+                height: 100vh;
+                width: 16em;
+            }
+            .side-by-side {
+                display: flex;
+                flex-direction: column; 
+            }
+
+            .sideButton {
+                background-color: black;
+                color: white;
+                border: none;
+                margin-top: 0.5em;
+                text-align: center;
+                font-size: 20px;
+                width: 100%;
+                height: 90px;
+            }
+
+            .update-form {
+                margin-left: 2em;
+                margin-top: 4em;
+                font-size: 1.5em;
+                width: 60%;
+            }
+
+            input, select, textarea {
+                width: 100%;
+                padding: 0.5em;
+                margin-bottom: 1em;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            button {
+                background-color: #4386EC;
+                color: white;
+                border: none;
+                padding: 0.5em 1em;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #346AB0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="side-by-side">
+            <div class="flex-grid">
+                <div>
+                    <a href="/view">
+                        <button class="sideButton" style="background-color: #4386EC;">View</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/report">
+                        <button class="sideButton">Report</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/history">
+                        <button class="sideButton">History</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/help">
+                        <button class="sideButton">Help</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="/information">
+                        <button class="sideButton">Information</button>
+                    </a>
+                </div>
+                <div>
+                    <img src="/images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 12em;" onclick="someFunction();">
+                </div>
+            </div>
+        </div>
+
+        <div class="update-form">
+            <h1>Update Animal Information</h1>
+            <form action="/update/<%= animal._id %>" method="POST">
+                <label for="Animal_name">Animal Name:</label>
+                <input type="text" id="Animal_name" name="Animal_name" value="<%= animal.Animal_name %>" required>
+
+                <label for="Type">Type:</label>
+                <select id="Type" name="Type" required>
+                    <option value="Street Dog" <%= animal.Type === 'Street Dog' ? 'selected' : '' %>>Street Dog</option>
+                    <option value="Street Cat" <%= animal.Type === 'Street Cat' ? 'selected' : '' %>>Street Cat</option>
+                    <option value="Others" <%= animal.Type === 'Others' ? 'selected' : '' %>>Others</option>
+                </select>
+
+                <label for="Breed">Breed:</label>
+                <input type="text" id="Breed" name="Breed" value="<%= animal.Breed %>" required>
+
+                <label for="Gender">Gender:</label>
+                <select id="Gender" name="Gender" required>
+                    <option value="Male" <%= animal.Gender === 'Male' ? 'selected' : '' %>>Male</option>
+                    <option value="Female" <%= animal.Gender === 'Female' ? 'selected' : '' %>>Female</option>
+                    <option value="Unknown" <%= animal.Gender === 'Unknown' ? 'selected' : '' %>>Unknown</option>
+                </select>
+
+                <label for="Location">Location:</label>
+                <input type="text" id="Location" name="Location" value="<%= animal.Location %>" required>
+
+                <label for="Prominent_Features">Prominent Features:</label>
+                <textarea id="Prominent_Features" name="Prominent_Features" rows="4"><%= animal.Prominent_Features %></textarea>
+
+                <label for="Disabilities">Disabilities:</label>
+                <textarea id="Disabilities" name="Disabilities" rows="4"><%= animal.Disabilities %></textarea>
+
+                <label for="Adopted">Adopted?</label>
+                <select id="Adopted" name="Adopted" required>
+                    <option value="yes" <%= animal.Adopted === 'yes' ? 'selected' : '' %>>Yes</option>
+                    <option value="no" <%= animal.Adopted === 'no' ? 'selected' : '' %>>No</option>
+                </select>
+
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </body>
+</html>
