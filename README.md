@@ -187,3 +187,14 @@ curl -X PUT http://localhost:8099/api/animals/name/Lucy\
            "Adopted": “No”
          }'
 ```
+<br/> 4.5 Delete an Animal
+    <br/>HTTP Request Type: DELETE
+    <br/>Path URI: /api/animals/name/:Animal_name
+<br/>Testing Command (DO NOT COPY TO TERMINAL):
+```
+curl -X DELETE http://localhost:8099/api/animals/name/<Animal_name> ⁠ 
+```
+EXAMPLE :
+```
+⁠curl -X DELETE http://localhost:8099/api/animals/name/lacy
+```
