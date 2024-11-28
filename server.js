@@ -416,7 +416,12 @@ app.get("/information", isLoggedIn, (req, res) => {
 	res.render('information', {user: req.user});
 });
 
-
+app.get("/logout", function(req, res){
+    req.logout(function(err){
+        if (err) { return next(err); }
+        res.redirect('/login'); 
+    });
+});
 // Taha & Awais 6:53pm 28/11/2024
 
 //CREATE RESTFUL
