@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Middleware to parse form 
 //try
 //app.use(formidable());
 app.use((req, res,next) => {
-	console.log(`Received request for: ${req.originalUrl}`);
+	console.log(Received request for: ${req.originalUrl});
 	next();
 })
 
@@ -96,7 +96,7 @@ app.use(express.static('public'));
 
 app.use((req, res, next) => {
     let d = new Date();
-    console.log(`TRACE: ${req.path} was requested at ${d.toLocaleDateString()}`);
+    console.log(TRACE: ${req.path} was requested at ${d.toLocaleDateString()});
     next();
 });
 
@@ -112,9 +112,9 @@ const findAllAnimals = async (db, criteria = {}) => {
 
     findResults = await collection.find(criteria).toArray();
 
-    console.log(`findCriteria: ${JSON.stringify(criteria)}`);
-    console.log(`findDocument: ${findResults.length}`);
-    console.log(`findResults: ${JSON.stringify(findResults)}`);	
+    console.log(findCriteria: ${JSON.stringify(criteria)});
+    console.log(findDocument: ${findResults.length});
+    console.log(findResults: ${JSON.stringify(findResults)});	
 
     return findResults;
 };
@@ -233,7 +233,7 @@ const handle_UpdateSaveView = async (req, res) => {
 	console.log("Update data:", updateData);
 	const results = await updateDocument(db, DOCID, updateData);
 	console.log("Update results:", results);
-	res.status(200).render('info', { message: `Updated ${results.modifiedCount} document(s)`, user: req.user });
+	res.status(200).render('info', { message: Updated ${results.modifiedCount} document(s), user: req.user });
 	} else {
 		res.status(500).render('info', {message: 'save error !', user: req.user});
 	}
@@ -401,50 +401,10 @@ app.get("/information", isLoggedIn, (req, res) => {
 	res.render('information', {user: req.user});
 });
 
-/*
-// Taha & Awais 7:03pm
-app.post('/api/animals', async (req, res) => {
-try {
-const newAnimal = new animals(req.body);
-await newAnimal.save();
-res.status(201).json(newAnimal);
-} catch (err) {
-res.status(500).send({ error: err.message });
-}
-});
 
-app.get('/api/animals/:id', async (req, res) => {
-try {
-const animal = await animals.findById(req.params.id);
-if (!animal) return res.status(404).send('Animal not found');
-res.status(200).json(animal);
-} catch (err) {
-res.status(500).send({ error: err.message });
-}
-});
+// Taha & Awais 6:53pm 28/11/2024
 
-app.put('/api/animals/:id', async (req, res) => {
-try {
-const updatedAnimal = await animals.findByIdAndUpdate(req.params.id, req.body, { new: true });
-if (!updatedAnimal) return res.status(404).send('Animal not found');
-res.status(200).json(updatedAnimal);
-} catch (err) {
-res.status(500).send({ error: err.message });
-}
-});
-
-app.delete('/api/animals/:id', async (req, res) => {
-try {
-const deletedAnimal = await animals.findByIdAndRemove(req.params.id);
-if (!deletedAnimal) return res.status(404).send('Animal not found');
-res.status(200).send('Animal deleted');
-} catch (err) {
-res.status(500).send({ error: err.message });
-}
-});
-
-*/
-
+//CREATE RESTFUL
 app.post('/api/animals/:Animal_name', async (req, res) => {
     try {
         if (req.params.Animal_name) {
@@ -471,7 +431,98 @@ app.post('/api/animals/:Animal_name', async (req, res) => {
     }
 });
 
-// Ends here - Awais & Taha
+//READ ALL ANIMALS RESTFUL
+app.get('/api/animals', async (req, res) => {
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const animals = await findAllAnimals(db);
+        res.status(200).json(animals);
+    } catch (error) {
+        console.error("Error retrieving animals:", error);
+        res.status(500).json({ "error": "Internal server error" });
+    } finally {
+        await client.close();
+    }
+});
+//curl -X GET http://localhost:8099/api/animals
+
+//READ SPECIFIC ANIMAL RESTFUL
+app.get('/api/animals/name/:Animal_name', async (req, res) => {
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const animal = await findOneAnimalDocument(db, { Animal_name: req.params.Animal_name });
+        if (animal.length > 0) {
+            res.status(200).json(animal[0]);
+        } else {
+            res.status(404).json({ "error": "Animal not found" });
+        }
+    } catch (error) {
+        console.error("Error retrieving animal:", error);
+        res.status(500).json({ "error": "Internal server error" });
+    } finally {
+        await client.close();
+    }
+});
+//curl -X GET http://localhost:8099/api/animals/name/<Animal_name>
+
+//UPDATE RESTFUL
+app.put('/api/animals/name/:Animal_name', async (req, res) => {
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const updateData = req.body;
+        const result = await updateDocument(db, { Animal_name: req.params.Animal_name }, updateData);
+        if (result.modifiedCount > 0) {
+            res.status(200).json({ "message": "Animal updated successfully" });
+        } else {
+            res.status(404).json({ "error": "Animal not found or no changes made" });
+        }
+    } catch (error) {
+        console.error("Error updating animal:", error);
+        res.status(500).json({ "error": "Internal server error" });
+    } finally {
+        await client.close();
+    }
+});
+
+/*
+curl -X PUT http://localhost:8099/api/animals/name/<Animal_name> \
+     -H "Content-Type: application/json" \
+     -d '{
+           "Type": "",
+           "Animal_name": "",
+           "Breed": "",
+           "Gender": "",
+           "Location": "",
+           "Prominent_Features": "",
+           "Disabilities": "",
+           "Adopted": ""
+         }
+*/
+
+//DELETE RESTFUL
+app.delete('/api/animals/name/:Animal_name', async (req, res) => {
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const result = await deleteDocument(db, { Animal_name: req.params.Animal_name });
+        if (result.deletedCount > 0) {
+            res.status(200).json({ "message": "Animal deleted successfully" });
+        } else {
+            res.status(404).json({ "error": "Animal not found" });
+        }
+    } catch (error) {
+        console.error("Error deleting animal:", error);
+        res.status(500).json({ "error": "Internal server error" });
+    } finally {
+        await client.close();
+    }
+});
+// curl -X DELETE http://localhost:8099/api/animals/name/<Animal_name>
+
+// Ends here - Awais & Taha 6:53pm 28/11/2024
 
 app.get('/*', (req, res) => {
 	res.status(404).render('information', { message: `${req.path} - Unknown request! `});
@@ -479,5 +530,5 @@ app.get('/*', (req, res) => {
 
 const port = process.env.PORT || 8099;
 app.listen(port, () => {
-	console.log(`Listening at http://localhost:${port}`);
+	console.log(Listening at http://localhost:${port});
 });
