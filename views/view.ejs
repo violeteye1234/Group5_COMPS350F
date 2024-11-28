@@ -3,22 +3,30 @@
     <head>
         <style>
             body {
-                background-color: white;
-                display: flex;
-                flex-direction: row; 
-                justify-content: flex-start;
-                align-items: flex-start;
-                height: 100vh;
-                margin: 0;
+            background-color: white;
+            display: flex;
+            flex-direction: row; 
+            height: 100vh;
+            margin: 0;
+            padding: 0;
             }
+                
             .flex-grid {
-                background-color: black;
-                height: 100vh;
-                width: 16em;
+            background-color: black;
+            width: 16em;
+            position: fixed;
+            height: 100%;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
             }
-            .side-by-side {
-                display: flex;
-                flex-direction: column; 
+                
+                .side-by-side {
+            margin-left: 16em;
+            width: calc(100% - 16em);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
             }
 
             .sideButton {
@@ -82,15 +90,21 @@
                     <img src="/images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 12em;" onclick="someFunction();">
                 </div>
             </div>
-        </div>
-        <form method="post" action="/view">
+            <form method="post" action="/view">
             <div class="column-down">
                 <div class="search-container">
                     <label>Search District</label>
                     <select name="Location">
                         <option value="">Choose an option</option>
-                        <option value="sham shui po">sham shui po</option>
-                        <option value="yau tsim mong">yau tsim mong</option>
+                        <option value="sham shui po">Sham Shui Po</option>
+                        <option value="mong kok">Mong Kok</option>
+                        <option value="tsuen wan">Tsuen Wan</option>
+                        <option value="ho man tin">Ho Man Tin</option>
+                        <option value="kai tak">Kai Tak</option>
+                        <option value="yau ma tei">Yau Ma Tei</option>
+                        <option value="jordan">Jordan</option>
+                        <option value="kowloon">Kowloon</option>
+                        <option value="sha tin">Sha Tin</option>
                     </select>
                     <label style="margin-left: 3em;">Animal Type</label>
                     <select name="Type">
@@ -129,5 +143,7 @@
                 </div>
             </div>
         </form>
-    </body>
+        </div>
+        
+    </body>
 </html>

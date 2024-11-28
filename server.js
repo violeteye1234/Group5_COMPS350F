@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Middleware to parse form 
 //try
 //app.use(formidable());
 app.use((req, res,next) => {
-	console.log(Received request for: ${req.originalUrl});
+	console.log(`Received request for: ${req.originalUrl}`);
 	next();
 })
 
@@ -96,7 +96,7 @@ app.use(express.static('public'));
 
 app.use((req, res, next) => {
     let d = new Date();
-    console.log(TRACE: ${req.path} was requested at ${d.toLocaleDateString()});
+    console.log(`TRACE: ${req.path} was requested at ${d.toLocaleDateString()}`);
     next();
 });
 
@@ -112,9 +112,9 @@ const findAllAnimals = async (db, criteria = {}) => {
 
     findResults = await collection.find(criteria).toArray();
 
-    console.log(findCriteria: ${JSON.stringify(criteria)});
-    console.log(findDocument: ${findResults.length});
-    console.log(findResults: ${JSON.stringify(findResults)});	
+    console.log(`findCriteria: ${JSON.stringify(criteria)}`);
+    console.log(`findDocument: ${findResults.length}`);
+    console.log(`findResults: ${JSON.stringify(findResults)}`);	
 
     return findResults;
 };
@@ -228,12 +228,13 @@ const handle_UpdateSaveView = async (req, res) => {
 		Location: req.body.Location,
 		Prominent_Features: req.body.Prominent_Features,
 		Disabilities: req.body.Disabilities,
-		Adopted: req.body.Adopted
+		Adopted: req.body.Adopted,
+        Upload_Image: req.body.image
 	};
 	console.log("Update data:", updateData);
 	const results = await updateDocument(db, DOCID, updateData);
 	console.log("Update results:", results);
-	res.status(200).render('info', { message: Updated ${results.modifiedCount} document(s), user: req.user });
+	res.status(200).render('info', { message: `Updated ${results.modifiedCount} document(s), user: req.user `});
 	} else {
 		res.status(500).render('info', {message: 'save error !', user: req.user});
 	}
@@ -530,5 +531,5 @@ app.get('/*', (req, res) => {
 
 const port = process.env.PORT || 8099;
 app.listen(port, () => {
-	console.log(Listening at http://localhost:${port});
+	console.log(`Listening at http://localhost:${port}`);
 });

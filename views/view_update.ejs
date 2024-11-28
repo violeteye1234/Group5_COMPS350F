@@ -3,22 +3,30 @@
     <head>
         <style>
             body {
-                background-color: white;
-                display: flex;
-                flex-direction: row; 
-                justify-content: flex-start;
-                align-items: flex-start;
-                height: 100vh;
-                margin: 0;
+            background-color: white;
+            display: flex;
+            flex-direction: row; 
+            height: 100vh;
+            margin: 0;
+            padding: 0;
             }
+                
             .flex-grid {
-                background-color: black;
-                height: 100vh;
-                width: 16em;
+            background-color: black;
+            width: 16em;
+            position: fixed;
+            height: 100%;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
             }
+                
             .side-by-side {
-                display: flex;
-                flex-direction: column; 
+            margin-left: 16em;
+            width: calc(100% - 16em);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
             }
 
             .sideButton {
@@ -31,6 +39,7 @@
                 width: 100%;
                 height: 90px;
             }
+            
 
             .update-form {
                 margin-left: 2em;
@@ -93,48 +102,59 @@
                     <img src="/images/exit.png" style="width: 5em;height: auto; margin-left:4.5em; margin-top: 12em;" onclick="someFunction();">
                 </div>
             </div>
-        </div>
+        
 
-        <div class="update-form">
-            <h1>Update Animal Information</h1>
-            <form action="/update/<%= animal._id %>" method="POST">
-                <label for="Animal_name">Animal Name:</label>
-                <input type="text" id="Animal_name" name="Animal_name" value="<%= animal.Animal_name %>" required>
+		<div class="update-form">
+		    <h1>Update Animal Information</h1>
+		    <form action="/update/<%= animal._id %>" method="POST">
+		        <label for="Animal_name">Animal Name:</label>
+		        <input type="text" id="Animal_name" name="Animal_name" value="<%= animal.Animal_name %>" required>
 
-                <label for="Type">Type:</label>
-                <select id="Type" name="Type" required>
-                    <option value="Street Dog" <%= animal.Type === 'Street Dog' ? 'selected' : '' %>>Street Dog</option>
-                    <option value="Street Cat" <%= animal.Type === 'Street Cat' ? 'selected' : '' %>>Street Cat</option>
-                    <option value="Others" <%= animal.Type === 'Others' ? 'selected' : '' %>>Others</option>
-                </select>
+		        <label for="Type">Type:</label>
+		        <select id="Type" name="Type" required>
+		            <option value="Street Dog" <%= animal.Type === 'Street Dog' ? 'selected' : '' %>>Street Dog</option>
+		            <option value="Street Cat" <%= animal.Type === 'Street Cat' ? 'selected' : '' %>>Street Cat</option>
+		            <option value="Others" <%= animal.Type === 'Others' ? 'selected' : '' %>>Others</option>
+		        </select>
 
-                <label for="Breed">Breed:</label>
-                <input type="text" id="Breed" name="Breed" value="<%= animal.Breed %>" required>
+		        <label for="Breed">Breed:</label>
+		        <input type="text" id="Breed" name="Breed" value="<%= animal.Breed %>" required>
 
-                <label for="Gender">Gender:</label>
-                <select id="Gender" name="Gender" required>
-                    <option value="Male" <%= animal.Gender === 'Male' ? 'selected' : '' %>>Male</option>
-                    <option value="Female" <%= animal.Gender === 'Female' ? 'selected' : '' %>>Female</option>
-                    <option value="Unknown" <%= animal.Gender === 'Unknown' ? 'selected' : '' %>>Unknown</option>
-                </select>
+		        <label for="Gender">Gender:</label>
+		        <select id="Gender" name="Gender" required>
+		            <option value="Male" <%= animal.Gender === 'Male' ? 'selected' : '' %>>Male</option>
+		            <option value="Female" <%= animal.Gender === 'Female' ? 'selected' : '' %>>Female</option>
+		            <option value="Unknown" <%= animal.Gender === 'Unknown' ? 'selected' : '' %>>Unknown</option>
+		        </select>
 
-                <label for="Location">Location:</label>
-                <input type="text" id="Location" name="Location" value="<%= animal.Location %>" required>
+		        <label for="Location">Location:</label>
+		        <input type="text" id="Location" name="Location" value="<%= animal.Location %>" required>
+		        
+		        <label for="Location">Gender:</label>
+		        <select id="Location" name="Location" required>
+		            <option value="Male" <%= animal.Gender === 'Male' ? 'selected' : '' %>>Male</option>
+		            <option value="Female" <%= animal.Gender === 'Female' ? 'selected' : '' %>>Female</option>
+		            <option value="Unknown" <%= animal.Gender === 'Unknown' ? 'selected' : '' %>>Unknown</option>
+		        </select>
 
-                <label for="Prominent_Features">Prominent Features:</label>
-                <textarea id="Prominent_Features" name="Prominent_Features" rows="4"><%= animal.Prominent_Features %></textarea>
+		        <label for="Prominent_Features">Prominent Features:</label>
+		        <textarea id="Prominent_Features" name="Prominent_Features" rows="4"><%= animal.Prominent_Features %></textarea>
 
-                <label for="Disabilities">Disabilities:</label>
-                <textarea id="Disabilities" name="Disabilities" rows="4"><%= animal.Disabilities %></textarea>
+		        <label for="Disabilities">Disabilities:</label>
+		        <textarea id="Disabilities" name="Disabilities" rows="4"><%= animal.Disabilities %></textarea>
 
-                <label for="Adopted">Adopted?</label>
-                <select id="Adopted" name="Adopted" required>
-                    <option value="yes" <%= animal.Adopted === 'yes' ? 'selected' : '' %>>Yes</option>
-                    <option value="no" <%= animal.Adopted === 'no' ? 'selected' : '' %>>No</option>
-                </select>
+		        <label for="Adopted">Adopted?</label>
+		        <select id="Adopted" name="Adopted" required>
+		            <option value="yes" <%= animal.Adopted === 'yes' ? 'selected' : '' %>>Yes</option>
+		            <option value="no" <%= animal.Adopted === 'no' ? 'selected' : '' %>>No</option>
+		        </select>
+		        
+		        <label for="Upload_Image">Upload Image:</label>
+			<input type="file" id="Upload_Image" name="Upload_Image" accept="image/*">
 
-                <button type="submit">Update</button>
-            </form>
-        </div>
-    </body>
+		        <button type="submit">Update</button>
+		    </form>
+		</div>
+	</div>
+    </body>
 </html>
