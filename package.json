@@ -8,13 +8,14 @@
     "cors": "^2.8.5",
     "ejs": "*",
     "express": "*",
+    "express-formidable": "*",
     "express-session": "*",
     "mongodb": "*",
     "mongoose": "*",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "*",
     "passport": "*",
-    "passport-facebook": "*",
-    "express-formidable":"*",
-    "nodemon": "*"
+    "passport-facebook": "*"
   },
   "engine": "node >= 0.10.0",
   "scripts": {

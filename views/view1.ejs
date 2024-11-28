@@ -123,14 +123,9 @@
                     <p><strong>Adopted:</strong> <%= animal.Adopted %></p>
                     <p><strong>Time:</strong> <%= animal.Time %></p>
                     <p><strong>Upload Image:</strong></p>
-                    <% if (animal.Upload_Image && animal.Upload_Image.data) { %>
-                        <img src="data:<%= animal.Upload_Image.contentType %>;base64,<%= animal.Upload_Image.data.toString('base64') %>" alt="Image of <%= animal.Animal_name %>" style="width: 100px;">
-                    <% } else { %>
-                        <p>No image available</p>
-                    <% } %>
-
+                    <img src="data:image/jpeg;base64, <%= animal.Upload_Image%>" alt="Animal Image" style="max-width: 100%; height: auto;">
                     <form action="/update/<%= animal._id %>" method="GET">
-                    <button type="submit" class="update-button">Update</button>
+                        <button type="submit" class="update-button">Update</button>
                     </form>
 
                     <hr>

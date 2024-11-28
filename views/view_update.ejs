@@ -106,7 +106,7 @@
 
 		<div class="update-form">
 		    <h1>Update Animal Information</h1>
-		    <form action="/update/<%= animal._id %>" method="POST">
+		    <form action="/update/<%= animal._id %>" method="POST", enctype="multipart/form-data">
 		        <label for="Animal_name">Animal Name:</label>
 		        <input type="text" id="Animal_name" name="Animal_name" value="<%= animal.Animal_name %>" required>
 
@@ -129,14 +129,7 @@
 
 		        <label for="Location">Location:</label>
 		        <input type="text" id="Location" name="Location" value="<%= animal.Location %>" required>
-		        
-		        <label for="Location">Gender:</label>
-		        <select id="Location" name="Location" required>
-		            <option value="Male" <%= animal.Gender === 'Male' ? 'selected' : '' %>>Male</option>
-		            <option value="Female" <%= animal.Gender === 'Female' ? 'selected' : '' %>>Female</option>
-		            <option value="Unknown" <%= animal.Gender === 'Unknown' ? 'selected' : '' %>>Unknown</option>
-		        </select>
-
+                
 		        <label for="Prominent_Features">Prominent Features:</label>
 		        <textarea id="Prominent_Features" name="Prominent_Features" rows="4"><%= animal.Prominent_Features %></textarea>
 
@@ -150,7 +143,7 @@
 		        </select>
 		        
 		        <label for="Upload_Image">Upload Image:</label>
-			<input type="file" id="Upload_Image" name="Upload_Image" accept="image/*">
+			    <input type="file" id="Upload_Image" name="filetoupload" accept="image/*" required>
 
 		        <button type="submit">Update</button>
 		    </form>

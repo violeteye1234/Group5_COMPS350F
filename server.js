@@ -4,9 +4,11 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose'); // Awais & Taha 6:05pm
-//var formidable = require('express-formidable');
-//var fsPromises = require('fs').promises;
+const mongoose = require('mongoose');
+const formidable = require('express-formidable'), fsPromises = require('fs').promises;
+
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 app.set('view engine', 'ejs');
 app.set('views', './views'); 
@@ -229,8 +231,20 @@ const handle_UpdateSaveView = async (req, res) => {
 		Prominent_Features: req.body.Prominent_Features,
 		Disabilities: req.body.Disabilities,
 		Adopted: req.body.Adopted,
-        Upload_Image: req.body.image
+        	Upload_Image: req.body.Upload_Image,
 	};
+	
+	//photo update
+	
+	console.log("File uploaded:", req.file);
+            if (req.file) {
+                const data = await fsPromises.readFile(req.file.path);
+                updateData.Upload_Image = Buffer.from(data).toString('base64');
+            } else {
+                console.error("No file uploaded.");
+            }
+        
+        
 	console.log("Update data:", updateData);
 	const results = await updateDocument(db, DOCID, updateData);
 	console.log("Update results:", results);
@@ -368,7 +382,7 @@ app.get('/update/:id', isLoggedIn, async(req, res) => {
 })
 
 //view_save update
-app.post('/update/:id', isLoggedIn, async(req, res) => {
+app.post('/update/:id', isLoggedIn, upload.single('filetoupload'), async (req, res) => {
 	console.log("Update to save");
 	console.log("Requested ID:", req.params.id); // Log the specific ID being requested
 	console.log("Request parameters:", req.params); // Log all parameters
