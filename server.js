@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // MongoDB URI
-const uri = "mongodb+srv://your_username:your_password@cluster.mongodb.net/AnimalProject?retryWrites=true&w=majority";
+const uri = "mongodb+srv://kyk123456:031216Kyk@cluster0.pter2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // View Engine
 app.set('view engine', 'ejs');
