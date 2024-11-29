@@ -222,27 +222,25 @@ const handle_UpdateSaveView = async (req, res) => {
 	console.log("Documents found:", docs);
 	//if (docs.length > 0 && docs[0]['_id'] == req._id) {
 	if (docs.length > 0 && docs[0]._id.toString() === req.params.id) {
-	const updateData = {
-		Animal_name: req.body.Animal_name,
-		Type: req.body.Type,
-		Breed: req.body.Breed,
-		Gender: req.body.Gender,
-		Location: req.body.Location,
-		Prominent_Features: req.body.Prominent_Features,
-		Disabilities: req.body.Disabilities,
-		Adopted: req.body.Adopted,
-        Upload_Image: req.body.Upload_Image,
-	};
+		const updateData = {
+			Animal_name: req.body.Animal_name,
+			Type: req.body.Type,
+			Breed: req.body.Breed,
+			Gender: req.body.Gender,
+			Location: req.body.Location,
+			Prominent_Features: req.body.Prominent_Features,
+			Disabilities: req.body.Disabilities,
+			Adopted: req.body.Adopted,
+		Upload_Image: req.body.Upload_Image,
+		};
 	
 	//photo update
 	
-	console.log("File uploaded:", req.file);
-    if (req.file) {
-        const data = await fsPromises.readFile(req.file.path);
-        updateData.Upload_Image = Buffer.from(data).toString('base64');
-    } else {
-        console.error("No file uploaded.");
-    }
+		console.log("File uploaded:", req.file);
+	    if (req.file) {
+		const data = await fsPromises.readFile(req.file.path);
+		updateData.Upload_Image = Buffer.from(data).toString('base64');
+	    }
         
 	console.log("Update data:", updateData);
 	const results = await updateDocument(db, DOCID, updateData);
@@ -405,11 +403,11 @@ app.post("/report", isLoggedIn,(req, res) => {
 	handle_Create(req, res);
 });
 
-app.get("/report_enter", isLoggedIn, upload.single('image'), (req, res) => {
+app.get("/report_enter", isLoggedIn, (req, res) => {
 	res.render('report_enter', {user:req.user});
 });
 
-app.post("/report_enter", isLoggedIn, (req, res) => {
+app.post("/report_enter", isLoggedIn, upload.single('image'), (req, res) => {
 	handle_Create1(req, res);
 });
 
