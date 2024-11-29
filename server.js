@@ -13,10 +13,6 @@ const upload = multer({ dest: 'uploads/' });
 app.set('view engine', 'ejs');
 app.set('views', './views'); 
 
-//const cors = require('cors');
-//app.use(cors());
-//app.get('/favicon.ico', (req, res) => res.status(204));
-
 //login
 const users_login = {
     'test1': 'abc',
@@ -33,11 +29,10 @@ const animals = mongoose.model('animal', animalSchema);
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(bodyParser.json()); // added
-app.use(bodyParser.urlencoded({ extended: true })); // Middleware to parse form data
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true })); 
 
-//try
-//app.use(formidable());
+
 app.use((req, res,next) => {
 	console.log(`Received request for: ${req.originalUrl}`);
 	next();
@@ -73,19 +68,6 @@ const mongourl = 'mongodb+srv://kyk123456:031216Kyk@cluster0.pter2.mongodb.net/?
 const dbName = 'Animals';
 const collectionName = 'animal';
 
-/*
-mongoose.connect(mongourl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-
-.then(() => {
-    console.log("MongoDB connected successfully");
-})
-.catch(err => {
-    console.error("MongoDB connection error:", err);
-});
-*/
 const client = new MongoClient(mongourl,{
     serverApi: {
         version: ServerApiVersion.v1,
@@ -150,7 +132,7 @@ const handle_FindOne = async (req, res) => {
 
     // create query
         const criteria = {
-            Location: new RegExp(req.body.Location, 'i'), // 'i' \u8868\u793a\u5ffd\u7565\u5927\u5c0f\u5199
+            Location: new RegExp(req.body.Location, 'i'), 
             Type: new RegExp(req.body.Type, 'i'),
             Breed: new RegExp(req.body.Breed, 'i'),
             Gender: new RegExp(req.body.Gender, 'i'),
@@ -159,8 +141,7 @@ const handle_FindOne = async (req, res) => {
             Adopted: new RegExp(req.body.Adopted,'i')
         };
     
-    console.log("Search criteria:", criteria);//for debug
-    // \u79fb\u9664\u7a7a\u6216\u672a\u5b9a\u4e49\u7684\u952e
+    console.log("Search criteria:", criteria);
     Object.keys(criteria).forEach(key => {
         if (!criteria[key]) {
             delete criteria[key];
@@ -213,14 +194,11 @@ const handle_UpdateSaveView = async (req, res) => {
 	await client.connect();
 	console.log("Connected successfully to server");
 	const db = client.db(dbName);
-	//let DOCID = {_id: ObjectId(req.params.id)};
 	let DOCID = {_id: new ObjectId(req.params.id)};
 	const docs = await findOneAnimalDocument(db, DOCID);
-	//const id = docs[0]["_id"];
 	console.log("id",req.params.id);
 	console.log(docs[0]._id.toString());
 	console.log("Documents found:", docs);
-	//if (docs.length > 0 && docs[0]['_id'] == req._id) {
 	if (docs.length > 0 && docs[0]._id.toString() === req.params.id) {
 		const updateData = {
 			Animal_name: req.body.Animal_name,
@@ -330,7 +308,7 @@ const handle_Create1 = async (req, res) => {
 
 // Serve the login form
 app.get("/login", (req, res) => {
-	res.render('login', { message: null }); // Use 'login.ejs' for the form kk?
+	res.render('login', { message: null }); 
 });
 
 app.post("/login", (req, res, next) => {
@@ -381,7 +359,6 @@ app.post('/view', isLoggedIn, async (req, res) => {
 })
 
 //view_update get
-// use /:id \u4eceview1.ejs update button\u5904\u62ff animal._id
 app.get('/update/:id', isLoggedIn, async(req, res) => {
 	console.log("update start!");
 	await passAnimalDocument(req, res);
@@ -428,7 +405,7 @@ app.get("/logout", function(req, res){
         res.redirect('/login'); 
     });
 });
-// Taha & Awais 6:53pm 28/11/2024
+
 
 //CREATE RESTFUL
 app.post('/api/animals/:Animal_name', async (req, res) => {
@@ -471,7 +448,6 @@ app.get('/api/animals', async (req, res) => {
         await client.close();
     }
 });
-//curl -X GET http://localhost:8099/api/animals
 
 //READ SPECIFIC ANIMAL RESTFUL
 app.get('/api/animals/name/:Animal_name', async (req, res) => {
@@ -491,7 +467,6 @@ app.get('/api/animals/name/:Animal_name', async (req, res) => {
         await client.close();
     }
 });
-//curl -X GET http://localhost:8099/api/animals/name/<Animal_name>
 
 //UPDATE RESTFUL
 app.put('/api/animals/name/:Animal_name', async (req, res) => {
@@ -513,21 +488,6 @@ app.put('/api/animals/name/:Animal_name', async (req, res) => {
     }
 });
 
-/*
-curl -X PUT http://localhost:8099/api/animals/name/<Animal_name> \
-     -H "Content-Type: application/json" \
-     -d '{
-           "Type": "",
-           "Animal_name": "",
-           "Breed": "",
-           "Gender": "",
-           "Location": "",
-           "Prominent_Features": "",
-           "Disabilities": "",
-           "Adopted": ""
-         }
-*/
-
 //DELETE RESTFUL
 app.delete('/api/animals/name/:Animal_name', async (req, res) => {
     try {
@@ -546,9 +506,6 @@ app.delete('/api/animals/name/:Animal_name', async (req, res) => {
         await client.close();
     }
 });
-// curl -X DELETE http://localhost:8099/api/animals/name/<Animal_name>
-
-// Ends here - Awais & Taha 6:53pm 28/11/2024
 
 app.get('/*', (req, res) => {
 	res.status(404).render('information', { message: `${req.path} - Unknown request! `});
