@@ -125,76 +125,44 @@ Gender: Unknown
 <br/> -- This page acts as an About Us Page to recognise the developers behind this web application. 
 
 <br/>4. RESTful CRUD Services
+
 <br/> 4.1 Post/Create an Animal
     <br/>HTTP Request Type: POST
     <br/>Path URI: /api/animals/name/:Animal_name
-<br/>Testing Command Format (DO NOT COPY TO TERMINAL): 
-```
-curl -X POST -H "Content-Type: application/json" --data '{"Animal_name":"<Animal Name>","gender":"<M/F>"}' localhost:8099/api/animals/<Animal Name>
-```
 EXAMPLE:
 ```
-curl -X POST -H "Content-Type: application/json" --data '{"Animal_name":"dog","gender":"m"}' localhost:8099/api/animals/dog
+curl -X POST https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/Lion -H "Content-Type: application/json" -d "{\"Gender\":\"Male\"}"
 ```
 <br/> 4.2 Read ALL Animals in the Database
     <br/>HTTP Request Type: GET
     <br/>Path URI: /api/animals
 <br/>Testing Command EXAMPLE:
 ```
-curl -X GET http://localhost:8099/api/animals
+curl -X GET https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals
 ```
 <br/> 4.3 Read specific animals in the Database
     <br/>HTTP Request Type: GET
     <br/>Path URI: /api/animals/name/:Animal_name
-<br/>Testing Command (DO NOT COPY TO TERMINAL):
-```
-curl -X GET http://localhost:8099/api/animals/name/<Animal_name>
-```
 EXAMPLE: 
 ```
-curl -X GET http://localhost:8099/api/animals/name/dog
+curl -X GET https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/name/Lion
 ```
 <br/> 4.4 Update specific animal in the database
     <br/>HTTP Request Type: PUT
     <br/>Path URI: /api/animals/name/:Animal_name
 <br/>Testing Command (DO NOT COPY TO TERMINAL):
-```
-curl -X PUT http://localhost:8099/api/animals/name/<Animal_name> \
-     -H "Content-Type: application/json" \
-     -d '{
-           "Type": "",
-           "Animal_name": "",
-           "Breed": "",
-           "Gender": "",
-           "Location": "",
-           "Prominent_Features": "",
-           "Disabilities": "",
-           "Adopted": ""
-         }'
-```
 EXAMPLE: 
 ```
-curl -X PUT http://localhost:8099/api/animals/name/Lucy\
-     -H "Content-Type: application/json" \
-     -d '{
-           "Type": “Street Dog”,
-           "Animal_name": “”,
-           "Breed": “Serbian”,
-           "Gender": “F”,
-           "Location": “Tuen Mun”,
-           "Prominent_Features": “White Fur”,
-           "Disabilities": "",
-           "Adopted": “No”
-         }'
+curl -X PUT https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/name/Lion\ -H "Content-Type: application/json" -d '{"Type": "Street Dog","Animal_name": "","Breed":"Serbian","Gender":"female","Location":"Ho Man Tin","Prominent_Features":"White Fur","Disabilities": "","Adopted": "No"}'
+```
+```
+curl -X PUT https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/name/Lion -H "Content-Type: application/json" -d "{\"Type\": \"Street Dog\", \"Animal_name\": \"Lion\", \"Breed\": \"Serbian\", \"Gender\": \"female\", \"Location\": \"Ho Man Tin\", \"Prominent_Features\": \"White Fur\", \"Disabilities\": \"\", \"Adopted\": \"No\"}"
 ```
 <br/> 4.5 Delete an Animal
     <br/>HTTP Request Type: DELETE
     <br/>Path URI: /api/animals/name/:Animal_name
-<br/>Testing Command (DO NOT COPY TO TERMINAL):
-```
-curl -X DELETE http://localhost:8099/api/animals/name/<Animal_name> ⁠ 
-```
+
 EXAMPLE :
 ```
-⁠curl -X DELETE http://localhost:8099/api/animals/name/lacy
+curl -X DELETE https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/name/Lion
 ```
