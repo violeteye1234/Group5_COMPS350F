@@ -73,7 +73,7 @@ Group info:
   - [animal.js](/models/animal.js) to define the animalSchema 
   
 ## ☁️ Cloud URL - left to do 
-- [Cloud URL](https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/view)
+- [Cloud URL](https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/view) https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/view
   
 ## ⚙️ Operation Guides
 1. If you have access to PJ's Facebook Account, you may log in and utilise the _**Sign in with Facebook**_ option. If not you may utilise:
