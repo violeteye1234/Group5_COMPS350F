@@ -440,7 +440,7 @@ app.post('/api/animals/:Animal_name', async (req, res) => {
             // Create a new document from the request body
             let newDoc = {
                 Animal_name: req.params.Animal_name,
-                gender: req.body.gender
+                Gender: req.body.Gender
             };
             console.log("Inserting document:", newDoc);
             const result = await insertDocument(db, newDoc); // Await this call
