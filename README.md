@@ -50,6 +50,7 @@ Group info:
   - [passport-facebook](https://www.npmjs.com/package/passport-facebook)
   - [express-formidable](https://www.npmjs.com/package/express-formidable)
   - [nodemon](https://www.npmjs.com/package/nodemon)
+  - [multer](https://www.npmjs.com/package/multer)
   
 - Public:
   - Consisting of [images](/public) to utilise in the ejs files.
@@ -72,8 +73,7 @@ Group info:
   - [animal.js](/models/animal.js) to define the animalSchema 
   
 ## ☁️ Cloud URL - left to do 
-- The cloud-based server URL (your server host running on the cloud platform) for testing:
-- E.g., https://381project-group1.render.com/
+- [Cloud URL](https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/view)
   
 ## ⚙️ Operation Guides
 1. If you have access to PJ's Facebook Account, you may log in and utilise the _**Sign in with Facebook**_ option. If not you may utilise:
@@ -124,37 +124,36 @@ Gender: Unknown
    <br/> 3.5 Information
 <br/> -- This page acts as an About Us Page to recognise the developers behind this web application. 
 
+<br/>Once you are satisifed, you may press on the logout icon on the bottom left corner 
+
 <br/>4. RESTful CRUD Services
 
 <br/> 4.1 Post/Create an Animal
     <br/>HTTP Request Type: POST
     <br/>Path URI: /api/animals/name/:Animal_name
-EXAMPLE:
+<br/>Example Testing Command:
 ```
 curl -X POST https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/Lion -H "Content-Type: application/json" -d "{\"Gender\":\"Male\"}"
 ```
 <br/> 4.2 Read ALL Animals in the Database
     <br/>HTTP Request Type: GET
     <br/>Path URI: /api/animals
-<br/>Testing Command EXAMPLE:
+<br/>Example Testing Command:
 ```
 curl -X GET https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals
 ```
 <br/> 4.3 Read specific animals in the Database
     <br/>HTTP Request Type: GET
     <br/>Path URI: /api/animals/name/:Animal_name
-EXAMPLE: 
+<br/>Example Testing Command: 
 ```
 curl -X GET https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/name/Lion
 ```
 <br/> 4.4 Update specific animal in the database
     <br/>HTTP Request Type: PUT
     <br/>Path URI: /api/animals/name/:Animal_name
-<br/>Testing Command (DO NOT COPY TO TERMINAL):
-EXAMPLE: 
-```
-curl -X PUT https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/name/Lion\ -H "Content-Type: application/json" -d '{"Type": "Street Dog","Animal_name": "","Breed":"Serbian","Gender":"female","Location":"Ho Man Tin","Prominent_Features":"White Fur","Disabilities": "","Adopted": "No"}'
-```
+
+<br/>Example Testing Command:
 ```
 curl -X PUT https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/name/Lion -H "Content-Type: application/json" -d "{\"Type\": \"Street Dog\", \"Animal_name\": \"Lion\", \"Breed\": \"Serbian\", \"Gender\": \"female\", \"Location\": \"Ho Man Tin\", \"Prominent_Features\": \"White Fur\", \"Disabilities\": \"\", \"Adopted\": \"No\"}"
 ```
@@ -162,7 +161,7 @@ curl -X PUT https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.n
     <br/>HTTP Request Type: DELETE
     <br/>Path URI: /api/animals/name/:Animal_name
 
-EXAMPLE :
+<br/>Example Testing Command:
 ```
 curl -X DELETE https://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/api/animals/name/Lion
 ```
