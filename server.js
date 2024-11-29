@@ -231,19 +231,18 @@ const handle_UpdateSaveView = async (req, res) => {
 		Prominent_Features: req.body.Prominent_Features,
 		Disabilities: req.body.Disabilities,
 		Adopted: req.body.Adopted,
-        	Upload_Image: req.body.Upload_Image,
+        Upload_Image: req.body.Upload_Image,
 	};
 	
 	//photo update
 	
 	console.log("File uploaded:", req.file);
-            if (req.file) {
-                const data = await fsPromises.readFile(req.file.path);
-                updateData.Upload_Image = Buffer.from(data).toString('base64');
-            } else {
-                console.error("No file uploaded.");
-            }
-        
+    if (req.file) {
+        const data = await fsPromises.readFile(req.file.path);
+        updateData.Upload_Image = Buffer.from(data).toString('base64');
+    } else {
+        console.error("No file uploaded.");
+    }
         
 	console.log("Update data:", updateData);
 	const results = await updateDocument(db, DOCID, updateData);
@@ -315,8 +314,17 @@ const handle_Create1 = async (req, res) => {
 		Gender : req.body.gender,
 		Location : req.body.location,
 		Prominent_Features : req.body.prominent_feature,
-		Upload_Image: req.body.image
+		Upload_Image: req.body.Upload_Image
 	});
+
+    console.log("File uploaded:", req.file);
+    if (req.file) {
+        const data = await fsPromises.readFile(req.file.path);
+        new_animal.Upload_Image = Buffer.from(data).toString('base64');
+    } else {
+        console.error("No file uploaded.");
+    }
+
 	await insertDocument(db, new_animal);
 	console.log(new_animal);
 	res.redirect('/history');
@@ -397,7 +405,7 @@ app.post("/report", isLoggedIn,(req, res) => {
 	handle_Create(req, res);
 });
 
-app.get("/report_enter", isLoggedIn, (req, res) => {
+app.get("/report_enter", isLoggedIn, upload.single('image'), (req, res) => {
 	res.render('report_enter', {user:req.user});
 });
 
