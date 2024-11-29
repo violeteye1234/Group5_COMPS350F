@@ -116,7 +116,7 @@ Gender: Unknown
 ---Note: You can leave any fields empty as well. ---
 ``` 
   <br/> 3.3 History
-<br/> -- You can view all the animals here and have the option to delete by pressing on the delete button. 
+<br/> -- You can view all the animals here and have the option to delete by pressing on the delete button. Please only click on it **ONCE** and wait for it to load. 
 
    <br/> 3.4 Help
 <br/> -- This page is intended to allow users to ask for help when using this interface by sending an email to the group leader. 
