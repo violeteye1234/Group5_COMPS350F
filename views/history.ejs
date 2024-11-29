@@ -64,8 +64,11 @@
     		<h2>Total Animals: <%= nAnimals %></h2>
     		<% for (var animal of animals) { %>
         	<div class="animal-item">
-            	<h3>Breed: <%= animal.breed %></h3>
-           	<p>ID: <%= animal._id %></p>
+        	<h2>Meet <%= animal.Animal_name %>!</h2>
+        	<p><strong>Gender:</strong> <%= animal.Gender %></p>
+            	<p><strong>Breed: </strong><%= animal.Breed %></p>
+           	<p><strong>Image:</strong></p>
+                    <img src="data:image/jpeg;base64, <%= animal.Upload_Image%>" alt="Animal Image" style="max-width: 40vh; height: auto;">
             	<form action="/delete" method="POST" style="display:inline;">
                 	<input type="hidden" name="_id" value="<%= animal._id %>">
                 	<button type="submit">Delete</button>
