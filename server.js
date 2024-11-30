@@ -49,7 +49,7 @@ passport.deserializeUser((user, done) => {
 passport.use(new FacebookStrategy({
     clientID: '8596720763773735', 
     clientSecret: '8e5a7dc3e7fbf9be4c92319040c97ac0',
-    callbackURL: 'http://localhost:8099/auth/facebook/callback'
+    callbackURL: 'http://381project-group5-h7gucfdreybjfyc6.eastus-01.azurewebsites.net/auth/facebook/callback'
 },
     (token, refreshToken, profile, done) => {
         console.log("Facebook Profile: " + JSON.stringify(profile));
